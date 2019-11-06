@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Sourcebuster Js -->
+    <script src="https://cdn.jsdelivr.net/npm/sourcebuster@1.1.0/dist/sourcebuster.min.js"  crossorigin="anonymous"></script>
+
+    <!-- Ajax Js -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" crossorigin="anonymous"></script>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- APP | PAGE NAME -->
+    <title>Travelbeta Directory App</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</head>
+<body onload="updateDB();">
+<div class="container"> <!-- Webpage Size -->
+    <div th:if="${not #lists.isEmpty(contacts)}">
+        <br>
+        <h2>Directory</h2>
+        <table class="table table-striped"> <!-- type of table wanted -->
+            <tr>
+                <th>ID</th>
+                <th>FIRSTNAME</th>
+                <th>LASTNAME</th>
+                <th>PHONENUMBER</th>
+                <th>EMAIL</th>
+                <th>PASSWORD</th>
+                <th>VIEW</th>
+                <th>EDIT</th>
+                <th>DELETE</th>
+            </tr>
+            <tr th:each="contact : ${contacts}">
+                <td th:text="${contact.id}"></td>
+                <td th:text="${contact.firstName}"></td>
+                <td th:text="${contact.lastName}"></td>
+                <td th:text="${contact.phoneNumber}"></td>
+                <td th:text="${contact.email}"></td>
+                <td th:text="${contact.passWord}"></td>
+                <td><a th:href="${'/contact/show/' + contact.id}">View</a> </td>
+                <td><a th:href="${'/contact/edit/' + contact.id}">Edit</a> </td>
+                <td><a th:href="${'/contact/delete/' + contact.id}">Delete</a> </td>
+            </tr>
+        </table>
+    </div>
+    <div class="row">
+        <form>
+            <input id="myButton" name="myButton" class="MyButton" type="button" value="Create New Contact" onclick="window.location.href='/contact/new'" />
+        </form>
+        <style>
+            input.MyButton {
+                width: 250px;
+                padding: 20px;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 130%;
+                background: #3366cc;
+                color: #fff;
+                border: 1px solid #3366cc;
+                border-radius: 10px;
+            }
+            input.MyButton:hover {
+                color: #ffff00;
+                background: #000;
+                border: 1px solid #fff;
+            }
+        </style>
+    </div>
+    </div>
+</div>
+<script>
+    var sbObj = null;
+
+    function initialiseSBJS(){
+        sbjs.init({
+            lifetime: 6,
+            domain: {
+                host: 'localhost:8080',
+                isolate: true
+            },
+            referrals: [
+                {
+                     host: 'plus.url.google.com',
+                     display: 'plus.google.com :)'
+                 },
+                 {
+                     host: 'blog.localhost:8080',
+                     display:'localhost'
+                 }
+            ],
+            custom_campaign: 'my_adwords_campaign',
+            promocode: true,
+            callback: placeData
+        });
+    }
+
+    function placeData(sb) {
+        sbObj = sb;
+        console.log('*** CURRENT USER INFO ***');
+        console.log('Type, Source, Medium, Campaign, Content, Term');
+        console.log(sb.current);
+        console.log('Date & Time of Visit, Entrance Point, Referer URL');
+        console.log(sb.current_add);
+        console.log('No. of Pages Visited, Current Page URL');
+        console.log(sb.session);
+        console.log('No. of Times Visited, IP-Address, Current User-Agent(Browser)');
+        console.log(sb.udata);
+        console.log('User Promo Code');
+        console.log(sb.promo);
+
+    }
+
+
+    function buildSBJSObject() {
+        return {
+            "type": sbObj.current.typ,
+            "source": sbObj.current.src,
+            "medium": sbObj.current.mdm,
+            "cmp": sbObj.current.cmp,
+            "cnt":sbObj.current.cnt,
+            "trm":sbObj.current.trm
+        };
+    }
+
+
+    $(document).ready(function(){
+
+        initialiseSBJS();
+
+        $("#myButton").click(function() {
+            var  payload = buildSBJSObject();
+            // console.log(payload);
+
+            $.ajax({
+                type: "POST",
+                url: "/contact.htm",
+                data: payload
+            })
+        });
+
+        $(function updateDB() {
+            var pageLoad = buildSBJSObject();
+
+            $.ajax({
+                type: "POST",
+                url: "/contact.htm",
+                data: pageLoad,
+                context: document.body,
+                success: function() {
+                    console.log("HomePage: Loaded");
+                }
+            });
+        });
+    });
+</script>
+</body>
+<script>
+    function updateDB() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/contact.htm", true);
+    }
+</script>
+</html>

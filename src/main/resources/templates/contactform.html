@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--style="" class="js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange-->
+<!--history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity-->
+<!--cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent-->
+<!--video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths js-menubar"-->
+<head>
+    <!-- Sourcebuster Js -->
+    <script src="https://cdn.jsdelivr.net/npm/sourcebuster@1.1.0/dist/sourcebuster.min.js"  crossorigin="anonymous"></script>
+
+    <!-- Ajax Js -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" crossorigin="anonymous"></script>
+
+    <!-- Required meta tags: Universal Character Set + Transformation Format—8-bit -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- APP | PAGE NAME -->
+    <title>Travelbeta Directory | Sign Up</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"> -->
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</head>
+<body onload="updateDB();">
+    <!-- HTML Element Tag is DIV, HTML Element Class is CONTAINER -->
+    <div class="container">
+        <h2>Travelbeta</h2>
+
+<!--suppress HtmlUnknownTarget -->
+<form class="form-horizontal" th:object="${contactForm}" th:action="@{/contact}" method="post">
+    <!--suppress HtmlUnknownTarget -->
+    <form class="form-horizontal" enctype="text/plain" th:object="${contactForm}" th:action="@{/interactions}" method="get">
+
+    <!-- 1st-things-1st: Map the "Re:Direct-to-Home" Link -->
+    <div class="row">
+        <div class="col-sm-3">
+            <a href="/contact/list">HOME</a>
+        </div>
+    </div>
+
+    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+        <p th:text="#{form.hasErrors}">Error Message</p>
+    </div>
+        <input type="hidden" th:field="*{id}"/>
+
+        <div class="form-group" th:class="${#fields.hasErrors('firstName')} ? 'form-group has-error' : 'form-group'">
+            <label class="col-sm-2 control-label">First Name</label>
+            <div class="col-sm-10">
+                    <input type="text" id="firstName" name="firstName" class="form-control"
+                       th:field="*{firstName}" th:errorclass="has-error" onmousedown="mouseDown()" onmouseup="mouseUp()" onchange="ajaxFunction()" value=""/>
+                    <p id="interactionsFirstName"></p>
+
+                <span class="help-block">
+                <!-- UL sets standards for different product categories and tests products to make sure they meet the standards -->
+                    <ul>
+                        <li th:each="err : ${#fields.errors('firstName')}" th:text="${err}" />
+                    </ul>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group" th:class="${#fields.hasErrors('lastName')} ? 'form-group has-error' : 'form-group'">
+            <label class="col-sm-2 control-label">Last Name</label>
+            <div class="col-sm-10">
+                    <input type="text" id="lastName" name="lastName" class="form-control"
+                       th:field="*{lastName}" th:errorclass="has-error" onmousedown="mouseDown()" onmouseup="mouseUp()" onchange="ajaxFunction()" value=""/>
+                    <p id="interactionsLastName"></p>
+
+                <span class="help-block">
+                    <!-- UL sets standards for different product categories and tests products to make sure they meet the standards -->
+                   <ul>
+                       <li th:each="err : ${#fields.errors('lastName')}" th:text="${err}" />
+                   </ul>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group" th:class="${#fields.hasErrors('phoneNumber')} ? 'form-group has-error' : 'form-group'">
+            <label class="col-sm-2 control-label">Telephone</label>
+            <div class="col-sm-10">
+                    <input type="number" id="phoneNumber" name="phoneNumber" min="0" max="50000000000"
+                       step="0" class="form-control" th:field="*{phoneNumber}" th:errorclass="has-error" onmousedown="mouseDown()" onmouseup="mouseUp()" onchange="ajaxFunction()" value=""/>
+                    <p id="interactionsPhoneNumber"></p>
+
+                <span class="help-block">
+                    <!-- UL sets standards for different product categories and tests products to make sure they meet the standards -->
+                   <ul>
+                       <li th:each="err : ${#fields.errors('phoneNumber')}" th:text="${err}" />
+                   </ul>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group" th:class="${#fields.hasErrors('email')} ? 'form-group has-error' : 'form-group'">
+            <label class="col-sm-2 control-label">Email Address</label>
+            <div class="col-sm-10">
+                    <input type="email" id="email" name="email" placeholder="Enter your email " autocomplete="on" class="form-control"
+                           th:field="*{email}" th:errorclass="has-error" onmousedown="mouseDown()" onmouseup="mouseUp()" onchange="ajaxFunction()" value=""/>
+                    <p id="interactionsEmail"></p>
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+
+                <span class="help-block">
+                    <!-- UL sets standards for different product categories and tests products to make sure they meet the standards -->
+                   <ul>
+                       <li th:each="err : ${#fields.errors('email')}" th:text="${err}" />
+                   </ul>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group" th:class="${#fields.hasErrors('passWord')} ? 'form-group has-error' : 'form-group'">
+            <label class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+                    <input type="password" id="passWord" name="passWord" class="form-control"
+                       placeholder="Password" th:field="*{passWord}" th:errorclass="has-error" onmousedown="mouseDown()" onmouseup="mouseUp()" onchange="ajaxFunction()" value=""/>
+                    <p id="interactionsPassWord"></p>
+
+                <span class="help-block">
+                <!-- UL sets standards for different product categories and tests products to make sure they meet the standards -->
+                   <ul>
+                       <li th:each="err : ${#fields.errors('passWord')}" th:text="${err}" />
+                   </ul>
+                </span>
+            </div>
+        </div>
+            <!-- Use this Piece, for Verifying Humans-on-site-->
+            <!--  <div class="form-group form-check">-->
+            <!--     <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
+            <!--        <label class="form-check-label" for="exampleCheck1">Not a robot? Tick here!</label>-->
+            <!--  </div>-->
+    <div class="conversion row">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+    </form>
+</form>
+    <footer class="form-group site-footer">
+        <div class="site-footer-legal">© 2019 <a href="www.travelbeta.com">Travelbeta</a>
+        </div>
+        <div class="form-group site-footer-right">
+            <div class="form-group site-footer-right">
+                Powered by <a href="javascript:void(0)" target="_blank">Travelbeta.com Limited </a>
+            </div>
+        </div>
+    </footer>
+    </div>
+    <!--
+        On-Load Events Function + JQuery Ajax Call
+    -->
+    <script>
+        $(document).ready(function() {
+
+            $(function updateDB() {
+
+                $.ajax({
+                    success: function() {
+                        console.log("Form Page: Loaded");
+                    }
+                });
+            });
+        });
+    </script>
+    <!--
+        On-MouseDown Events Function + JQuery Ajax Call
+    -->
+    <script>
+        $("#firstName").on("mousedown", function mouseDown() {
+            var val = $(this).val();
+
+            $.ajax({
+                type: "GET",
+                url: "/interactions",
+                data: { firstName: val },
+                success: function() {
+                    console.log("Attempt to change First Name field");
+                }
+            });
+        });
+        $("#lastName").on("mousedown", function mouseDown() {
+            var val = $(this).val();
+
+            $.ajax({
+                type: "GET",
+                url: "/interactions",
+                data: { lastName: val },
+                success: function() {
+                    console.log("Attempt to change Last Name field");
+                }
+            });
+        });
+        $("#phoneNumber").on("mousedown", function mouseDown() {
+            var val = $(this).val();
+
+            $.ajax({
+                type: "GET",
+                url: "/interactions",
+                data: { phoneNumber: val },
+                success: function() {
+                    console.log("Attempt to change Phone Number field");
+                }
+            });
+        });
+        $("#email").on("mousedown", function mouseDown() {
+            var val = $(this).val();
+
+            $.ajax({
+                type: "GET",
+                url: "/interactions",
+                data: { email: val },
+                success: function() {
+                    console.log("Attempt to change Email Address field");
+                }
+            });
+        });
+        $("#passWord").on("mousedown", function mouseDown() {
+            var val = $(this).val();
+
+            $.ajax({
+                type: "GET",
+                url: "/interactions",
+                data: { passWord: val },
+                success: function() {
+                    console.log("Attempt to change Password");
+                }
+            });
+        });
+    </script>
+    <!--
+        On-Change Events Function + JQuery Ajax Call
+    -->
+    <script>
+        $("#firstName").on("change", function ajaxFunction() {
+            var val = $(this).val();
+
+            $.ajax({
+                type: "GET",
+                url: "/interactions",
+                data: { firstName: val },
+                success: function() {
+                    console.log('First Name: ' + val);
+                }
+            });
+        });
+        $("#lastName").on("change", function ajaxFunction() {
+            var val = $(this).val();
+
+            $.ajax({
+                type: "GET",
+                url: "/interactions",
+                data: { lastName: val },
+                success: function() {
+                    console.log('Last Name: ' + val);
+                }
+            });
+        });
+        $("#phoneNumber").on("change", function ajaxFunction() {
+            var val = $(this).val();
+
+            $.ajax({
+                type: "GET",
+                url: "/interactions",
+                data: { phoneNumber: val },
+                success: function() {
+                    console.log('Phone Number: ' + val);
+                }
+            });
+        });
+        $("#email").on("change", function ajaxFunction() {
+            var val = $(this).val();
+
+            $.ajax({
+                type: "GET",
+                url: "/interactions",
+                data: { email: val },
+                success: function() {
+                    console.log('Email Address: ' + val);
+                }
+            });
+        });
+        $("#passWord").on("change", function ajaxFunction() {
+            var val = $(this).val();
+
+            $.ajax({
+                type: "GET",
+                url: "/interactions",
+                data: { passWord: val },
+                success: function() {
+                    console.log('Password: ' + val);
+                }
+            });
+        });
+    </script>
+    <!--
+        On-MouseUp Events Function + JQuery Ajax Call
+    -->
+    <script>
+        var changeTimer = false;
+
+        $("#firstName").on("mouseup", function mouseUp() {
+            var val = $(this).val();
+
+            if(changeTimer !== false) clearTimeout(changeTimer);
+            changeTimer = setTimeout(function(){
+
+                $.ajax({
+                    type: "GET",
+                    url: "/interactions",
+                    data: { firstName: val },
+                    success: function() {
+                        console.log("Updating First Name...");
+                    }
+                });
+                changeTimer = false;
+            },300);
+        });
+        $("#lastName").on("mouseup", function mouseUp() {
+            var val = $(this).val();
+
+            if(changeTimer !== false) clearTimeout(changeTimer);
+            changeTimer = setTimeout(function(){
+
+                $.ajax({
+                    type: "GET",
+                    url: "/interactions",
+                    data: { lastName: val },
+                    success: function() {
+                        console.log("Updating Last Name...");
+                    }
+                });
+                changeTimer = false;
+            },300);
+        });
+        $("#phoneNumber").on("mouseup", function mouseUp() {
+            var val = $(this).val();
+
+            if(changeTimer !== false) clearTimeout(changeTimer);
+            changeTimer = setTimeout(function(){
+
+                $.ajax({
+                    type: "GET",
+                    url: "/interactions",
+                    data: { phoneNumber: val },
+                    success: function() {
+                        console.log("Updating Phone Number...");
+                    }
+                });
+                changeTimer = false;
+            },300);
+        });
+        $("#email").on("mouseup", function mouseUp() {
+            var val = $(this).val();
+
+            if(changeTimer !== false) clearTimeout(changeTimer);
+            changeTimer = setTimeout(function(){
+
+                $.ajax({
+                    type: "GET",
+                    url: "/interactions",
+                    data: { email: val },
+                    success: function() {
+                        console.log("Updating Email Address...");
+                    }
+                });
+                changeTimer = false;
+            },300);
+        });
+        $("#passWord").on("mouseup", function mouseUp() {
+            var val = $(this).val();
+
+            if(changeTimer !== false) clearTimeout(changeTimer);
+            changeTimer = setTimeout(function(){
+
+                $.ajax({
+                    type: "GET",
+                    url: "/interactions",
+                    data: { passWord: val },
+                    success: function() {
+                        console.log("Updating Password...");
+                    }
+                });
+                changeTimer = false;
+            },300);
+        });
+    </script>
+    <!--
+        On-MouseDown
+            &
+        On-MouseUp Function
+    -->
+    <script>
+        function mouseDown() {
+            var ajaxRequest;
+            if (window.XMLHttpRequest) {
+                ajaxRequest = new XMLHttpRequest();
+            } else {
+                ajaxRequest = new ActiveXObject("Microsoft.XMLHttpRequest");
+            }
+            ajaxRequest.open("GET", "/interactions", true);
+        }
+
+        function mouseUp() {
+            var ajaxRequest;
+            if (window.XMLHttpRequest) {
+                ajaxRequest = new XMLHttpRequest();
+            } else {
+                ajaxRequest = new ActiveXObject("Microsoft.XMLHttpRequest");
+            }
+            ajaxRequest.open("GET", "/interactions", true);
+        }
+    </script>
+    <!--
+        On-Change Function
+    -->
+    <script>
+        function ajaxFunction() {
+            var ajaxRequest;
+            if (window.XMLHttpRequest) {
+                ajaxRequest = new XMLHttpRequest();
+            } else {
+                ajaxRequest = new ActiveXObject("Microsoft.XMLHttpRequest");
+            }
+
+            ajaxRequest.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+
+                    var firstName =document.getElementById("firstName").value;
+                    document.getElementById("interactionsFirstName").innerHTML = "You wrote: " + firstName;
+
+                    var lastName = document.getElementById("lastName").value;
+                    document.getElementById("interactionsLastName").innerHTML = "You wrote: " + lastName;
+
+                    var telephone =document.getElementById("phoneNumber").value;
+                    document.getElementById("interactionsPhoneNumber").innerHTML = "You wrote: " + telephone;
+
+                    var email = document.getElementById("email").value;
+                    document.getElementById("interactionsEmail").innerHTML = "You wrote: " + email;
+
+                    var password = document.getElementById("passWord").value;
+                    document.getElementById("interactionsPassWord").innerHTML = "You wrote: " + password;
+                }
+            };
+
+            ajaxRequest.open("GET", "/interactions", true);
+        }
+    </script>
+    <!--suppress CssUnknownTarget -->
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat|Open+San');
+        body {
+            font-family: 'Open Geoirgio', Cambria,sans-serif;
+        }
+
+        input[type="text"], input[type="number"], input[type="email"], input[type="password"] {
+        font-size: 0.9rem;
+        color: #010100;
+        width: 100%;
+        line-height: 60px;
+        padding-left: 3rem;
+        }
+        select {
+        width: 100%;
+        height: 65px;
+        color: #010100;
+        padding-left: 3rem;
+        }
+        .h1, h1 {
+        font-size: 36px;
+        }
+        .h1, .h2, .h3, h1, h2, h3 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+        }
+        .text-white {
+        color: #fff!important;
+        }
+        .font-w400 {
+        font-weight: 400;
+        }
+        .padding-top-xl {
+        padding-top: 5rem!important;
+        }
+        .padding-bottom-xl {
+        padding-bottom: 5rem!important;
+        }
+        .margin-top-m {
+        margin-top: 3rem!important;
+        }
+        .margin-bottom-m {
+        margin-bottom: 3rem!important;
+        }
+        .section5 h2 {
+        line-height: 35px;
+        }
+        .section5 p {
+        font-size: 16px;
+        line-height: 26px;
+        }
+        .has-error input[type="text"], .has-error input[type="number"], .has-error input[type="email"], .has-error input[type="password"], .has-error select {
+            border: 1px solid #a94442;
+        }
+    </style>
+<!--    &lt;!&ndash;        To track users interactions(s) with an element, simply add the 'interactions' CSS class to the element.&ndash;&gt;-->
+<!--    &lt;!&ndash;        Have a conversion point on your page? You can add that too, just add the 'conversion' CSS class to your conversion's HTML element.&ndash;&gt;-->
+<!--    &lt;!&ndash;        An example instantiation with custom arguments.&ndash;&gt;-->
+<!--    &lt;!&ndash;        First,&ndash;&gt;-->
+<!--    &lt;!&ndash;     Include interactor.min.js by defining Interactor:        i.e      var Interactor&ndash;&gt;-->
+<!--    <script type="application/javascript">-->
+<!--        var Interactor=function(n){this.__init__(n)};Interactor.prototype={__init__:function(n){var e=this;return e.interactions="boolean"!=typeof n.interactions||n.interactions,e.interactionElement="string"==typeof n.interactionElement?n.interactionElement:"interactions",e.interactionEvents=!0===Array.isArray(n.interactionEvents)?n.interactionEvents:["mouseup","touchend"],e.conversions="boolean"!=typeof n.conversions||n.conversions,e.conversionElement="string"==typeof n.conversionElement?n.conversionElement:"conversion",e.conversionEvents=!0===Array.isArray(n.conversionEvents)?n.conversionEvents:["mouseup","touchend"],e.endpoint="string"==typeof n.endpoint?n.endpoint:"/interactions",e.async="boolean"!=typeof n.async||n.async,e.debug="boolean"!=typeof n.debug||n.debug,e.records=[],e.session={},e.loadTime=new Date,e.__initializeSession__(),e.__bindEvents__(),e},__bindEvents__:function(){var n=this;if(!0===n.interactions)for(e=0;e<n.interactionEvents.length;e++)document.querySelector("body").addEventListener(n.interactionEvents[e],function(e){e.stopPropagation(),e.target.classList.value===n.interactionElement&&n.__addInteraction__(e,"interactions")});if(!0===n.conversions)for(var e=0;e<n.conversionEvents.length;e++)document.querySelector("body").addEventListener(n.conversionEvents[e],function(e){e.stopPropagation(),e.target.classList.value===n.conversionElement&&n.__addInteraction__(e,"conversion")});return window.onbeforeunload=function(e){n.__sendInteractions__()},n},__addInteraction__:function(n,e){var t=this,i={type:e,event:n.type,targetTag:n.target.nodeName,targetClasses:n.target.className,content:n.target.innerText,clientPosition:{x:n.clientX,y:n.clientY},screenPosition:{x:n.screenX,y:n.screenY},createdAt:new Date};return t.records.push(i),t.debug&&(t.__closeSession__(),console.log("Session:\n",t.session)),t},__initializeSession__:function(){var n=this;return n.session={loadTime:n.loadTime,unloadTime:new Date,language:window.navigator.language,platform:window.navigator.platform,port:window.location.port,clientStart:{name:window.navigator.appVersion,innerWidth:window.innerWidth,innerHeight:window.innerHeight,outerWidth:window.outerWidth,outerHeight:window.outerHeight},page:{location:window.location.pathname,href:window.location.href,origin:window.location.origin,title:document.title},endpoint:n.endpoint},n},__closeSession__:function(){var n=this;return n.session.unloadTime=new Date,n.session.interactions=n.records,n.session.clientEnd={name:window.navigator.appVersion,innerWidth:window.innerWidth,innerHeight:window.innerHeight,outerWidth:window.outerWidth,outerHeight:window.outerHeight},n},__sendInteractions__:function(){var n=this,e=new XMLHttpRequest;return n.__closeSession__(),e.open("POST",n.endpoint,n.async),e.setRequestHeader("Content-Type","application/json; charset=UTF-8"),e.send(JSON.stringify(n.session)),n}};-->
+
+<!--        var interactions = new Interactor({-->
+<!--            interactions        : true,-->
+<!--            interactionElement  : "interactions",-->
+<!--            interactionEvents   : ["input", "change", "mousedown", "mouseup"],-->
+<!--            conversions         : true,-->
+<!--            conversionElement   : "conversion",-->
+<!--            conversionEvents    : ["input", "change", "mousedown", "mouseup"],-->
+<!--            endpoint            : '/interactions',-->
+<!--            async               : true,-->
+<!--            debug               : false-->
+<!--        });-->
+
+<!--        console.log(interactions);-->
+
+<!--        var elementsToTrack = [-->
+<!--            {-->
+<!--                element: "firstName",-->
+<!--                events : ["input", "change", "mousedown", "mouseup"],-->
+<!--                endpoint : "/interactions"-->
+<!--            },-->
+<!--            {-->
+<!--                element: "lastName",-->
+<!--                events : ["input", "change", "mousedown", "mouseup"],-->
+<!--                endpoint : "/interactions"-->
+
+<!--            },-->
+<!--            {-->
+<!--                element: "phoneNumber",-->
+<!--                events : ["input", "change", "mousedown", "mouseup"],-->
+<!--                endpoint : "/interactions"-->
+
+<!--            },-->
+<!--            {-->
+<!--                element: "email",-->
+<!--                events : ["input", "change", "mousedown", "mouseup"],-->
+<!--                endpoint : "/interactions"-->
+
+<!--            },-->
+<!--            {-->
+<!--                element: "passWord",-->
+<!--                events : ["input", "change", "mousedown", "mouseup"],-->
+<!--                // events : ["change", "mouseup", "touchend"],-->
+<!--                endpoint : "/interactions"-->
+<!--            }-->
+<!--        ];-->
+
+<!--        for (var i = 0; i < elementsToTrack.length; i++) {-->
+<!--            var el = elementsToTrack[i];-->
+<!--            new Interactor({-->
+<!--                interactionElement 	: el.element,-->
+<!--                interactionEvents 	: el.events,-->
+<!--                endpoint            : el.endpoint-->
+
+<!--            });-->
+<!--        }-->
+<!--    </script>-->
+</body>
+<script>
+    function updateDB() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/contact.htm", true);
+    }
+</script>
+</html>
